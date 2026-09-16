@@ -1,0 +1,71 @@
+-- --1. Criar Tabela de Medicamentos
+-- CREATE TABLE IF NOT EXISTS medicamentos_farmacia (
+--   id SERIAL PRIMARY KEY,
+--   nome_comercial VARCHAR(100) NOT NULL,
+--   principio_ativo VARCHAR(100) NOT NULL,
+--   laboratorio VARCHAR(60) NOT NULL,
+--   preco_balcao DECIMAL(10,2) NOT NULL,
+--   retencao_receita BOOLEAN DEFAULT FALSE,
+--   estoque_caixas INT NOT NULL
+-- );
+
+
+-- -- --2. Inserir Dados Demonstrativos 
+-- INSERT INTO medicamentos_farmacia 
+-- (nome_comercial, principio_ativo, laboratorio, preco_balcao, retencao_receita, estoque_caixas) 
+-- VALUES
+-- ('Amoxicilina 500mg', 'Amoxicilina Tri-hidratada', 'EMS Genéricos', 32.50, FALSE, 120),
+-- ('Dipirona Monoidratada 1g', 'Dipirona Sódica', 'Medley', 14.90, FALSE, 350),
+-- ('Dorflex Relaxante 36cp', 'Dipirona + Orfenadrina', 'Sanofi', 24.80, FALSE, 210),
+-- ('Rivotril 2mg', 'Clonazepam', 'Roche', 45.00, TRUE, 40),
+-- ('Losartana Potássica 50mg', 'Losartana', 'Neo Química', 18.00, FALSE, 180),
+-- ('Roacutan 20mg', 'Isotretinoína', 'Roche', 230.00, TRUE, 25);
+
+
+-- --3. Projeção simples de colunas especificas
+-- SELECT nome_comercial, principio_ativo
+-- FROM medicamentos_farmacia;
+
+
+-- --4. Utilizando Aliases (apelidos temporarios de exibição)
+-- SELECT 
+--     nome_comercial AS "Remédio",
+-- laboratorio AS "Fabricante Farmacêutico"
+-- FROM medicamentos_farmacia;
+
+-- -- 5. Simulando desconto de 20% no preço dos medicamentos
+-- SELECT 
+--     nome_comercial,
+--     preco_balcao AS "Preço no Balcão",
+--     (preco_balcao * 0.80) AS "Preço com Convenio"
+-- FROM medicamentos_farmacia;
+
+
+-- -- 6. Filtrar medicamentos com preço maior ou igual a 40 reais
+-- SELECT nome_comercial, preco_balcao
+-- FROM medicamentos_farmacia
+-- WHERE preco_balcao >= 40.00;
+
+-- -- 7. Filtrar medicamentos que exigem retenção de receita
+-- SELECT nome_comercial, laboratorio, retencao_receita
+-- FROM medicamentos_farmacia
+-- WHERE retencao_receita = TRUE;
+
+
+-- -- 8. Medicamentos controlados que custam mais de 40 reais
+-- SELECT nome_comercial, preco_balcao, retencao_receita
+-- FROM medicamentos_farmacia
+-- WHERE retencao_receita = TRUE 
+-- AND preco_balcao > 40.00;
+
+-- -- 9. Ranking: os 2 medicamentos com maior estoque
+-- SELECT nome_comercial, estoque_caixas
+-- FROM medicamentos_farmacia
+-- ORDER BY estoque_caixas DESC
+-- LIMIT 2;
+
+
+-- -- 10. Medicamentos ordenados pelo preço
+-- SELECT nome_comercial, preco_balcao
+-- FROM medicamentos_farmacia
+-- ORDER BY preco_balcao DESC;
